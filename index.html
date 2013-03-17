@@ -1,12 +1,13 @@
 <!doctype HTML>
 <html>
 	<head>
-		<title>Robot</title>
+		<title>Toy Robot Simulator</title>
 		<script type="text/javascript" src="javascripts/robot.js"></script>
 		<link rel="stylesheet" type="text/css" href="stylesheets/robot.css"/>
 	</head>
 	<body>
 		<h1>Toy Robot Simulator</h1>
+    <p>By <a href="mailto:hello@geoffstokes.net">Geoff Stokes</a></p>
 		<textarea id="input">PLACE 0,0,NORTH
 MOVE
 MOVE
@@ -28,8 +29,10 @@ MOVE
 MOVE
 MOVE
 REPORT</textarea>
-		<input id="runbtn" type="button" value="Run Script"/>
-		<input id="testbtn" type="button" value="Run Tests"/>
+		<p>
+    <small>"Run Script" will run the script in the textbox above.<br/>"Run Tests" will run a series of tests on the robot logic.</small><br/>
+    <input id="runbtn" type="button" value="Run Script"/>
+		<input id="testbtn" type="button" value="Run Tests"/></p>
 		<div id="console">
 			<pre>Toy Robot Simulator Output</pre>
 		</div>
