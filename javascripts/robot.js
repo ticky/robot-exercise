@@ -64,7 +64,7 @@ Robot.prototype = {
 				break;
 
 			case 'SOUTH':
-				if (this.y - 1 > this.table.originy)
+				if (this.y > this.table.originy)
 					this.y--;
 				break;
 
@@ -74,7 +74,7 @@ Robot.prototype = {
 				break;
 
 			case 'WEST':
-				if (this.x - 1 > this.table.originx)
+				if (this.x > this.table.originx)
 					this.x--;
 				break;
 
@@ -204,6 +204,7 @@ Robot.prototype = {
 
 window.onload = function() {
 
+	// Run Script in Textarea
 	document.getElementById('runbtn').onclick = function() {
 
 		var robot = new Robot(new Table(5,5));
@@ -227,6 +228,74 @@ window.onload = function() {
 		};
 
 		return false;
+
+	}
+
+	// Run Tests
+	document.getElementById('testbtn').onclick = function() {
+
+		// Define Tests
+		var tests = [
+			{
+				title: 'Example 1',
+				script: 'PLACE 0,0,NORTH\nMOVE\nREPORT',
+				output: '0,1,NORTH'
+			},
+			{
+				title: 'Example 2',
+				script: 'PLACE 0,0,NORTH\nLEFT\nREPORT',
+				output: '0,0,WEST'
+			},
+			{
+				title: 'Example 3',
+				script: 'PLACE 1,2,EAST\nMOVE\nMOVE\nLEFT\nMOVE\nREPORT',
+				output: '3,3,NORTH'
+			},
+			{
+				title: 'North Limit',
+				script: 'PLACE 0,0,NORTH\nMOVE\nMOVE\nMOVE\nMOVE\nMOVE\nREPORT',
+				output: '0,4,NORTH'
+			},
+			{
+				title: 'East Limit',
+				script: 'PLACE 0,0,EAST\nMOVE\nMOVE\nMOVE\nMOVE\nMOVE\nREPORT',
+				output: '4,0,EAST'
+			},
+			{
+				title: 'West Limit',
+				script: 'PLACE 0,0,WEST\nMOVE\nREPORT',
+				output: '0,0,WEST'
+			},
+			{
+				title: 'South Limit',
+				script: 'PLACE 0,0,SOUTH\nMOVE\nREPORT',
+				output: '0,0,SOUTH'
+			}
+		];
+
+		for (var i = 0; i < tests.length; i++) {
+
+			var robot = new Robot(new Table(5,5));
+
+			robot.output = function(str) {
+
+				var consolediv = document.getElementById('console');
+				var logline = document.createElement('pre');
+				var expected = tests[i].output;
+				var logtext = document.createTextNode(tests[i].title + ' ' + ((expected == str) ? 'Passed' : 'Failed') + '. Expected \"' + expected + '\", Actual \"' + str + '\"');
+
+				logline.appendChild(logtext)
+				consolediv.appendChild(logline);
+
+			}
+
+			var inval = tests[i].script.split('\n');
+
+			for (var j = 0; j <= inval.length - 1; j++) {
+				robot.parseCommand(inval[j]);
+			};
+
+		};
 
 	}
 
