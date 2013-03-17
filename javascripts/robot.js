@@ -150,7 +150,8 @@ Robot.prototype = {
 
 	report: function() {
 
-		this.output(this.x + ',' + this.y + ',' + this.f);
+		if (this.placed)
+			this.output(this.x + ',' + this.y + ',' + this.f);
 
 	},
 
@@ -194,16 +195,29 @@ Robot.prototype = {
 	},
 
 	output: function(str) {
+
 		console.log(str);
+
 	}
 
 }
 
 window.onload = function() {
 
-	var robot = new Robot(new Table(5,5));
-
 	document.getElementById('runbtn').onclick = function() {
+
+		var robot = new Robot(new Table(5,5));
+
+		robot.output = function(str) {
+
+			var consolediv = document.getElementById('console');
+			var logline = document.createElement('pre');
+			var logtext = document.createTextNode(str);
+
+			logline.appendChild(logtext)
+			consolediv.appendChild(logline);
+
+		}
 
 		var input = document.getElementById('input');
 		var inval = input.value.split('\n');
@@ -213,17 +227,6 @@ window.onload = function() {
 		};
 
 		return false;
-
-	}
-
-	robot.output = function(str) {
-
-		var consolediv = document.getElementById('console');
-		var logline = document.createElement('pre');
-		var logtext = document.createTextNode(str);
-
-		logline.appendChild(logtext)
-		consolediv.appendChild(logline);
 
 	}
 
